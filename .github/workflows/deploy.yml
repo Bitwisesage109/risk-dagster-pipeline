@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  DAGSTER_CLOUD_URL: "https://YOUR-ORG.dagster.cloud"  # Replace YOUR-ORG with your actual org
+  DAGSTER_CLOUD_URL: "https://sosuvconsulting.dagster.cloud"  
 
 jobs:
   deploy:
