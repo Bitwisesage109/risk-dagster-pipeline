@@ -1,5 +1,6 @@
 # workspace.yaml
 load_from:
   - python_module:
-      module_name: Risk
-      working_directory: "\\idcgenstorus\ctsan.induscap.com$\IndusCTSAN\technology\DEV\Systems\Risk\Daily\Test\Risk"
+      module_name: Risk.definitions
+      working_directory: /opt/dagster/app
+

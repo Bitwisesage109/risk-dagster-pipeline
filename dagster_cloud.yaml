@@ -1,0 +1,10 @@
+@"
+locations:
+  - location_name: risk-pipeline
+    code_source:
+      package_name: Risk
+    build:
+      directory: ./
+      registry: null  # For Serverless deployment
+    working_directory: /opt/dagster/app
+"@ | Out-File -FilePath dagster_cloud.yaml -Encoding UTF8

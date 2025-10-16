@@ -1,0 +1,10 @@
+@"
+dagster
+dagster-cloud
+pandas
+pyodbc
+paramiko
+cryptography
+openpyxl
+requests
+"@ | Out-File -FilePath requirements.txt -Encoding UTF8
