@@ -1,0 +1,5 @@
+# workspace.yaml
+load_from:
+  - python_module:
+      module_name: Risk
+      working_directory: "\\idcgenstorus\ctsan.induscap.com$\IndusCTSAN\technology\DEV\Systems\Risk\Daily\Test\Risk"
