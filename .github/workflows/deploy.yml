@@ -15,11 +15,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Deploy to Dagster+
-        uses: dagster-io/dagster-cloud-action/actions/hybrid_prod_deploy@v0.1
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          dagster_cloud_api_token: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
-          deployment: prod
-          location: ${{ toJson(matrix.location) }}  # Or specify your location directly
+          python-version: '3.10'
+      
+      - name: Install dagster-cloud CLI
+        run: pip install dagster-cloud
+      
+      - name: Update code location
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
+        run: |
+          dagster-cloud workspace add-location \
+            --location-name "risk-pipeline" \
+            --location-file "." \
+            --python-file "definitions.py"
