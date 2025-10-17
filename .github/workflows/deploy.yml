@@ -26,4 +26,4 @@ jobs:
           DAGSTER_CLOUD_ORGANIZATION: sosuvconsulting
         run: |
           echo "Syncing Dagster Cloud workspace..."
-          dagster-cloud workspace sync --deployment prod --debug
+          dagster-cloud workspace sync --deployment prod
