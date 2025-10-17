@@ -9,19 +9,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify dagster_cloud.yaml exists
-        run: ls -la && cat dagster_cloud.yaml
-
+      # 1️⃣ Clone the repo first
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Verify dagster_cloud.yaml exists
+      - name: Verify dagster_cloud.yaml exists
+        run: ls -la && cat dagster_cloud.yaml
+
+      # 3️⃣ Setup Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
+      # 4️⃣ Install CLI
       - name: Install dagster-cloud CLI
         run: pip install dagster-cloud
+
+      # 5️⃣ Sync Dagster Cloud workspace
       - name: Sync Dagster Cloud workspace
         env:
           DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
