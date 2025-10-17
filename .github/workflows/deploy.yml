@@ -1,4 +1,4 @@
-name: Deploy to Dagster+ Local Agent
+name: Deploy to Dagster+ Hybrid
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - main
 
 env:
-  DAGSTER_CLOUD_URL: "https://sosuvconsulting.dagster.cloud"  
+  DAGSTER_CLOUD_URL: "https://sosuvconsulting.dagster.cloud"
+  DAGSTER_CLOUD_ORGANIZATION: "sosuvconsulting"  # Add your organization name
 
 jobs:
   deploy:
@@ -19,6 +20,6 @@ jobs:
         with:
           dagster_cloud_api_token: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
           deployment: prod
-          dagster_cloud_file: dagster_cloud.yaml
+          location: ${{ toJson(matrix.location) }}  # Or specify your location directly
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
