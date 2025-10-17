@@ -1,4 +1,4 @@
-name: Update Dagster+ Configuration
+name: Deploy Dagster Cloud Configuration
 
 on:
   push:
@@ -6,17 +6,24 @@ on:
       - main
 
 jobs:
-  update-config:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
       - name: Install dagster-cloud CLI
         run: pip install dagster-cloud
-      
-      - name: Update workspace configuration
+
+      - name: Sync Dagster Cloud workspace
         env:
           DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
           DAGSTER_CLOUD_ORGANIZATION: sosuvconsulting
         run: |
-          dagster-cloud workspace sync --deployment prod
+          echo "Syncing Dagster Cloud workspace..."
+          dagster-cloud workspace sync --deployment prod --debug

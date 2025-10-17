@@ -1,12 +1,16 @@
 [project]
 name = "Risk"
 version = "0.1.0"
-description = "Add your description here"
+description = "Risk Dagster Project"
 readme = "README.md"
 requires-python = ">=3.9,<3.14"
 dependencies = [
     "dagster",
     "dagster-cloud",
+    "pandas",
+    "pyodbc",
+    "paramiko",
+    "cryptography",
 ]
 
 [project.optional-dependencies]
@@ -21,7 +25,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.dagster]
 module_name = "Risk.definitions"
-code_location_name = "Risk"
-
-[tool.setuptools.packages.find]
-exclude=["Risk_tests"]
+code_location_name = "risk-pipeline"
