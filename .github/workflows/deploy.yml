@@ -5,10 +5,6 @@ on:
     branches:
       - main
 
-env:
-  DAGSTER_CLOUD_URL: "https://sosuvconsulting.dagster.cloud"
-  DAGSTER_CLOUD_ORGANIZATION: "sosuvconsulting"  # Add your organization name
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
