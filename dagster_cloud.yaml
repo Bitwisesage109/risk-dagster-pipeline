@@ -2,4 +2,4 @@ locations:
   - location_name: risk-pipeline
     code_source:
       package_name: Risk
-    working_directory: /opt/dagster/app
+    working_directory: \\idcgenstorus\ctsan.induscap.com$\IndusCTSAN\technology\DEV\Systems\Risk\Daily\Test\Risk
