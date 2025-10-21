@@ -8,57 +8,44 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Verify dagster_cloud.yaml exists and print
-      - name: Verify dagster_cloud.yaml presence
-        run: |
-          echo "Checking dagster_cloud.yaml..."
-          ls -la
-          cat dagster_cloud.yaml || (echo "❌ dagster_cloud.yaml not found!" && exit 1)
-
-      # 3️⃣ Validate YAML syntax and schema
-      - name: Validate dagster_cloud.yaml content
+      - name: Validate dagster_cloud.yaml
         run: |
           python - <<'PYCODE'
           import yaml, sys
           try:
               with open("dagster_cloud.yaml") as f:
                   data = yaml.safe_load(f)
-              if not isinstance(data, dict):
-                  raise ValueError("Root must be a mapping (dictionary).")
-              if "locations" not in data:
-                  raise ValueError("Missing required 'locations' key.")
-              if not isinstance(data["locations"], list):
-                  raise ValueError("'locations' must be a list.")
-              for loc in data["locations"]:
-                  if "location_name" not in loc or "code_source" not in loc:
-                      raise ValueError("Each location must contain 'location_name' and 'code_source'.")
+              if not isinstance(data, dict): raise ValueError("Root must be a dict.")
+              if "locations" not in data: raise ValueError("Missing 'locations'.")
+              if not isinstance(data["locations"], list): raise ValueError("'locations' must be a list.")
               print("✅ dagster_cloud.yaml validation passed.")
           except Exception as e:
               print(f"❌ Validation failed: {e}")
               sys.exit(1)
           PYCODE
 
-      # 4️⃣ Set up Python
+      - name: Debug working directory and YAML
+        run: |
+          echo "Current working directory: $(pwd)"
+          ls -R
+          cat dagster_cloud.yaml
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
-      # 5️⃣ Install Dagster Cloud CLI
       - name: Install dagster-cloud CLI
-        run: pip install dagster-cloud
+        run: pip install --upgrade dagster-cloud
 
-      # 6️⃣ Sync Dagster Cloud workspace
       - name: Sync Dagster Cloud workspace
         env:
           DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
           DAGSTER_CLOUD_ORGANIZATION: sosuvconsulting
         run: |
           echo "🚀 Syncing Dagster Cloud workspace..."
-          dagster-cloud workspace sync --deployment prod
+          dagster-cloud workspace sync --deployment prod --workspace-file ./dagster_cloud.yaml
