@@ -48,4 +48,4 @@ jobs:
           DAGSTER_CLOUD_ORGANIZATION: sosuvconsulting
         run: |
           echo "🚀 Syncing Dagster Cloud workspace..."
-          dagster-cloud workspace sync --deployment prod --workspace-file ./dagster_cloud.yaml
+          dagster-cloud workspace sync --deployment prod --workspace ./dagster_cloud.yaml
